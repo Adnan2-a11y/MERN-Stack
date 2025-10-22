@@ -2,15 +2,19 @@ import express from 'express';
 import { body, validationResult } from 'express-validator';
 import User from '../models/Users.js';
 import { generateToken } from '../utils/jwt.js';
+import { loginLimiter, registerLimiter } from '../middleware/rateLimit.js';
+import Student from "../models/Student.js";
+import Teacher from "../models/Teacher.js";
 
 const router = express.Router();
 
 // 🔹 Register User
 router.post(
-    '/register', [
+    '/register', registerLimiter,[
         body('username').isLength({ min: 3 }).trim().escape(),
         body('email').isEmail().normalizeEmail(),
-        body('password').isLength({ min: 6 })
+        body('password').isLength({ min: 6 }),
+        body('role').isIn(['student', 'teacher']).optional(),
     ],
     async(req, res) => {
         console.log("📩 Incoming data:", req.body);
@@ -24,7 +28,7 @@ router.post(
                 });
             }
 
-            const { username, email, password, role } = req.body;
+            const { username, email, password, role='student',...profileData } = req.body;
 
             const existingUser = await User.findOne({ email });
             if (existingUser) {
@@ -33,7 +37,15 @@ router.post(
                     message: 'User already exists'
                 });
             }
-
+            
+            let profile =null;
+            if (role === 'student') {
+                profile =await Student.create(profileData);
+                
+            } else if (role === 'teacher') {
+                profile =await Teacher.create(profileData);
+                
+            }
             const newUser = new User({ username, email, password, role });
             await newUser.save();
 
@@ -62,7 +74,7 @@ router.post(
 );
 
 // 🔹 Login User
-router.post('/login', [
+router.post('/login',loginLimiter, [
     body('email').isEmail().normalizeEmail(),
     body('password').isLength({ min: 6 })
 ], async(req, res) => {

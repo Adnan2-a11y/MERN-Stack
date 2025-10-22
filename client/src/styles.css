@@ -39,8 +39,8 @@ body {
 }
 
 form {
-  max-width: 400px;
-  margin: 3rem auto;
+  max-width: 600px; /* Increased from 400px to accommodate more fields */
+  margin: 2rem auto;
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
@@ -52,13 +52,79 @@ form {
   z-index: 1;
 }
 
-input {
+/* Form labels */
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+/* Form controls */
+input, select {
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Remove the centered select styles and use consistent styling */
+select {
+  display: block;
+  text-align: left;
+  width: 100%;
+  margin: 0;
+}
+
+/* Form text helper */
+.form-text {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Fix checkbox alignment */
+.d-flex {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Reduced gap */
+}
+
+
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
+.form-check-label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Alerts */
+.alert {
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+/* Button styles */
 button {
   background-color: #007bff;
   color: white;
@@ -67,20 +133,55 @@ button {
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
+  width: 100%;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Text center utility */
+.text-center {
+  text-align: center;
+}
+
+/* Link styles */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Small text */
+.small {
+  font-size: 0.875rem;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
 @media (max-width: 600px) {
   form {
     margin: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
+    max-width: none;
   }
   
   .auth-background,
   .dashboard-background {
     background-attachment: scroll;
+  }
+  
+  input, select {
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 }

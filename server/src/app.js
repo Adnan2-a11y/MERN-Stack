@@ -5,6 +5,7 @@ import morgan from 'morgan';
 //import indexRoutes from './routes/index.js';
 import authRoute from './routes/auth.js';
 import dashboardRoutes from "./routes/dashboard.js";
+import { globalLimiter } from './middleware/rateLimit.js'; 
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
 //app.use('/api', indexRoutes);
+app.use(globalLimiter); // Apply global rate limiter
 console.log("✅ Auth route file loaded successfully!");
 app.use('/api/auth', authRoute);
 app.use('/api/dashboard', dashboardRoutes);
