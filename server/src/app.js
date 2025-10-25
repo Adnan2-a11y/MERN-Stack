@@ -2,20 +2,29 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import cooKieParser from 'cookie-parser';
 //import indexRoutes from './routes/index.js';
-import authRoute from './routes/auth.js';
-import dashboardRoutes from "./routes/dashboard.js";
+import authRoute from './routes/api/auth.js';
+import dashboardRoutes from "./routes/api/dashboard.js";
 import { globalLimiter } from './middleware/rateLimit.js'; 
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    credentials: true,
+}));
+
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cooKieParser());
+
 //app.use('/api', indexRoutes);
 app.use(globalLimiter); // Apply global rate limiter
 console.log("✅ Auth route file loaded successfully!");
+
+//Define routes
 app.use('/api/auth', authRoute);
 app.use('/api/dashboard', dashboardRoutes);
 

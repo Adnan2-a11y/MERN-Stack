@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['student', 'teacher'],
         default: 'student'
+    },
+    profile:{
+        type:mongoose.Schema.Types.ObjectId,
+        refPath:'role'
     }
 }, {
     timestamps: true
