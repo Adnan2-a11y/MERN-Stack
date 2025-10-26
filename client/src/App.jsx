@@ -1,34 +1,56 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Account from "./components/account";
-import Dashboard from "./components/Dashboard";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  MDBContainer,
+  MDBTabs,
+  MDBTabsItem,
+  MDBTabsLink,
+  MDBTabsContent,
+  MDBTabsPane,
+} from 'mdb-react-ui-kit';
+
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import Dashboard from './components/homepage/Dashboard';
+import './styles/Auth.css'; // ✅ correct global path
 
 const App = () => {
+  const [activeTab, setActiveTab] = useState('login'); // ✅ state defined
+
   return (
     <Router>
-      <nav style={{ 
-        display: "flex", 
-        gap: "1rem", 
-        justifyContent: "center", 
-        marginTop: "1rem",
-        padding: "1rem",
-        backgroundColor: "#f8f9fa",
-        borderBottom: "1px solid #dee2e6"
-      }}>
-        <Link to="/" style={{ textDecoration: 'none', color: '#1266f1', fontWeight: 'bold' }}>
-          Login
-        </Link>
-        <Link to="/signup" style={{ textDecoration: 'none', color: '#1266f1', fontWeight: 'bold' }}>
-          Signup
-        </Link>
-        <Link to="/dashboard" style={{ textDecoration: 'none', color: '#1266f1', fontWeight: 'bold' }}>
-          Dashboard
-        </Link>
-      </nav>
+      <MDBContainer className="p-4 d-flex flex-column align-items-center justify-content-center min-vh-100">
+        <MDBTabs pills justify className="mb-3">
+          <MDBTabsItem>
+            <MDBTabsLink
+              onClick={() => setActiveTab('login')}
+              active={activeTab === 'login'}
+            >
+              Login
+            </MDBTabsLink>
+          </MDBTabsItem>
+          <MDBTabsItem>
+            <MDBTabsLink
+              onClick={() => setActiveTab('register')}
+              active={activeTab === 'register'}
+            >
+              Register
+            </MDBTabsLink>
+          </MDBTabsItem>
+        </MDBTabs>
 
+        <MDBTabsContent>
+          <MDBTabsPane open={activeTab === 'login'}>
+            <Login />
+          </MDBTabsPane>
+          <MDBTabsPane open={activeTab === 'register'}>
+            <Register />
+          </MDBTabsPane>
+        </MDBTabsContent>
+      </MDBContainer>
+
+      {/* Example of routing to a dashboard */}
       <Routes>
-        <Route path="/" element={<Account />} />
-        <Route path="/signup" element={<Account />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>

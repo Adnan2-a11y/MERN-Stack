@@ -4,8 +4,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cooKieParser from 'cookie-parser';
 //import indexRoutes from './routes/index.js';
-import authRoute from './routes/api/auth.js';
-import dashboardRoutes from "./routes/api/dashboard.js";
+import authRoute from './routes/auth.js';
+//import dashboardRoutes from "./routes/api/dashboard.js";
 import { globalLimiter } from './middleware/rateLimit.js'; 
 
 const app = express();
@@ -26,7 +26,7 @@ console.log("✅ Auth route file loaded successfully!");
 
 //Define routes
 app.use('/api/auth', authRoute);
-app.use('/api/dashboard', dashboardRoutes);
+//app.use('/api/dashboard', dashboardRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ success: false, message: "Route not found" });

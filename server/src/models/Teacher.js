@@ -12,6 +12,13 @@ const teacherSchema = new mongoose.Schema({
     match: [/^(\+8801[3-9]\d{8})?$/, "Invalid Bangladeshi number"],
     default: null,
   },
+  email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
   joinDate: { type: Date, default: Date.now },
 });
 
