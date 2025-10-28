@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-const mongoose = require('mongoose');
-
 const courseSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -78,4 +76,5 @@ courseSchema.pre('save', function(next) {
     next();
 });
 
-module.exports = mongoose.model('Course', courseSchema);
+export default mongoose.model('Course', courseSchema);
+//export default mongoose.model("Teacher", teacherSchema);

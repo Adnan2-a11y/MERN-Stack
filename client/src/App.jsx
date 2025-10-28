@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import {
   MDBContainer,
   MDBTabs,
@@ -11,47 +11,21 @@ import {
 
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
-import Dashboard from './components/homepage/Dashboard';
-import './styles/Auth.css'; // ✅ correct global path
+import Homepage from './components/homepage/Homepage.jsx';
+import AuthTabs from './components/Auth/AuthTabs.jsx';
+import './styles/Auth.css';
+
+
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('login'); // ✅ state defined
-
   return (
     <Router>
-      <MDBContainer className="p-4 d-flex flex-column align-items-center justify-content-center min-vh-100">
-        <MDBTabs pills justify className="mb-3">
-          <MDBTabsItem>
-            <MDBTabsLink
-              onClick={() => setActiveTab('login')}
-              active={activeTab === 'login'}
-            >
-              Login
-            </MDBTabsLink>
-          </MDBTabsItem>
-          <MDBTabsItem>
-            <MDBTabsLink
-              onClick={() => setActiveTab('register')}
-              active={activeTab === 'register'}
-            >
-              Register
-            </MDBTabsLink>
-          </MDBTabsItem>
-        </MDBTabs>
-
-        <MDBTabsContent>
-          <MDBTabsPane open={activeTab === 'login'}>
-            <Login />
-          </MDBTabsPane>
-          <MDBTabsPane open={activeTab === 'register'}>
-            <Register />
-          </MDBTabsPane>
-        </MDBTabsContent>
-      </MDBContainer>
-
-      {/* Example of routing to a dashboard */}
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* 🏠 Homepage */}
+        <Route path="/" element={<Homepage />} />
+        <Route path="/account/login" element={<Login />} />
+        <Route path="/account/register" element={<Register />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

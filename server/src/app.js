@@ -4,6 +4,9 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cooKieParser from 'cookie-parser';
 //import indexRoutes from './routes/index.js';
+
+
+import courseRoutes from './routes/courses.js';
 import authRoute from './routes/auth.js';
 //import dashboardRoutes from "./routes/api/dashboard.js";
 import { globalLimiter } from './middleware/rateLimit.js'; 
@@ -26,6 +29,7 @@ console.log("✅ Auth route file loaded successfully!");
 
 //Define routes
 app.use('/api/auth', authRoute);
+app.use('/api/courses', courseRoutes);
 //app.use('/api/dashboard', dashboardRoutes);
 
 app.use((req, res) => {

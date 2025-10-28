@@ -24,7 +24,7 @@ router.post(
     
     async(req, res) => {
         console.log("📩 Incoming data:", req.body);
-        let profile =null;
+        let studentProfile =null;
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -35,9 +35,9 @@ router.post(
                 });
             }
 
-            const { username, email, password, role='student',...profileData } = req.body;
+            const { username, email, password, ...studentData } = req.body;
 
-            const existingUser = await User.findOne({ username,email });
+            const existingUser = await User.findOne({$or: [{username},{email}] });
             if (existingUser) {
                 return res.status(400).json({
                     success: false,
@@ -45,19 +45,23 @@ router.post(
                 });
             }
             
-            
-            if (role === 'student') {
-                profile =await Student.create({...profileData, email});
-                
-            } else if (role === 'teacher') {
-                profile =await Teacher.create({...profileData, email});
-                
-            }
-            const newUser = new User({ username,
-                 email, 
-                 password, 
-                 role,
-                profile : profile ? profile._id :undefined });
+            //Create student profile 
+            studentProfile = await Student.create({...studentData, email});
+            //if (role === 'student') {
+            //    profile =await Student.create({...profileData, email});
+            //    
+            //} else if (role === 'teacher') {
+            //    profile =await Teacher.create({...profileData, email});
+            //    
+            //}
+            const newUser = new User({ 
+                username,
+                email, 
+                password, 
+                role: "student",
+                profile: studentProfile._id,
+                profileModel: 'Student'
+            });
             await newUser.save();
             await newUser.populate('profile');
 
@@ -71,7 +75,7 @@ router.post(
 
             res.status(201).json({
                 success: true,
-                message: 'User registered successfully',
+                message: 'Student registered successfully',
                 data: {
                     user: {
                         id: newUser._id,
@@ -79,17 +83,15 @@ router.post(
                         email: newUser.email,
                         role: newUser.role
                     },
+                    profile: studentProfile,
                     
                 }
             });
         } catch (error) {
             console.error("Registration Error:", error);
-            if (profile) {
-                if (role === 'student') {
-                    await Student.findByIdAndDelete(profile._id);
-                } else if (role === 'teacher') {
-                    await Teacher.findByIdAndDelete(profile._id);
-                }
+            // Rollback if student profile created but user failed
+            if (studentProfile) {
+              await Student.findByIdAndDelete(studentProfile._id);
             }
             res.status(500).json({
                 success: false,

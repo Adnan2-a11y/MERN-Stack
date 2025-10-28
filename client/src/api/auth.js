@@ -1,39 +1,26 @@
-// src/api.js
-
-
-// 🧠 Core Idea: Each function returns the backend response (Promise)
-/*export const signupUser = async (data) => {
-  const res = await fetch(`${BASE_URL}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-};
-
-export const loginUser = async (data) => {
-  const res = await fetch(`${BASE_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-};
-*/
 import axios from "axios";
-const BASE_URL = "http://localhost:5000/api/auth"; // backend route
 
-axios.defaults.withCredentials = true; // Enable sending cookies with requests
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000",
+  withCredentials: true, // important: include httpOnly cookie in browser
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-// 🧠 Core Idea: Each function returns the backend response (Promise)
- export const registerUser = async (formData) => {
-  return await axios.post(`${BASE_URL}/register`, formData);
- };
+export const registerUser = async (payload) => {
+  const res = await api.post("/api/auth/register", payload);
+  return res.data; // components expect message/data
+};
 
- export const loginUser = async (formData) => {
-  return await axios.post(`${BASE_URL}/login`, formData);
- };
+export const loginUser = async (payload) => {
+  const res = await api.post("/api/auth/login", payload);
+  return res.data;
+};
 
- export const logoutUser = async (formData) => {
-  return await axios.post(`${BASE_URL}/logout`, formData);
- };
+export const logoutUser = async () => {
+  const res = await api.post("/api/auth/logout");
+  return res.data;
+};
+
+export default api;

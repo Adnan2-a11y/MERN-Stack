@@ -1,18 +1,172 @@
-.auth-container {
-  background: #fff;
+/* Auth.css - Fixed Version */
+
+/* Background and Container Styles */
+.auth-page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+  padding: 20px;
+}
+
+.auth-page-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/bgimage2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(70%);
+  z-index: -1;
+}
+
+/* Form Container */
+.auth-form-container {
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
 }
+
+/* Header Styles */
+.auth-form-container h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #ff4b2b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* MDBInput Styles - Fixed Version */
+.form-outline {
+  position: relative !important;
+  background: #f8fafc !important;
+  border-radius: 8px !important;
+  margin-bottom: 1rem !important;
+}
+
+.form-outline .form-control {
+  padding: 1rem 0.75rem !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-family: 'Poppins', sans-serif !important;
+  transition: all 0.3s ease !important;
+  height: auto !important;
+}
+
+.form-outline .form-label {
+  position: absolute !important;
+  top: -0.75rem !important;
+  left: 0.75rem !important;
+  padding: 0 0.25rem !important;
+  background-color: #f8fafc !important;
+  color: #4a5568 !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  z-index: 1 !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Active State */
+.form-outline .form-control:focus {
+  border-color: #ff4b2b !important;
+  box-shadow: 0 0 0 3px rgba(255, 75, 43, 0.1) !important;
+  background: white !important;
+}
+
+.form-outline .form-control:focus ~ .form-label,
+.form-outline .form-control:not(:placeholder-shown) ~ .form-label {
+  transform: translateY(-50%) !important;
+  background: white !important;
+  font-size: 0.75rem !important;
+  color: #ff4b2b !important;
+}
+
+/* Remove MDB's default notch */
+.form-notch {
+  display: none !important;
+}
+
+/* Button Styles */
 .auth-btn {
-  background-color: #007bff;
-  border: none;
+  background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 14px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  transition: all 0.3s ease !important;
+  font-family: 'Poppins', sans-serif !important;
+  margin-top: 10px !important;
 }
+
 .auth-btn:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 20px rgba(255, 75, 43, 0.3) !important;
+  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%) !important;
 }
+
+/* Link Styles */
+.auth-form-container a {
+  color: #ff4b2b !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+}
+
+.auth-form-container a:hover {
+  text-decoration: underline !important;
+}
+
+.auth-form-container p {
+  color: #718096 !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  margin-top: 1rem !important;
+}
+
+/* Error Messages */
 .text-danger.small {
-  margin-top: -10px;
-  font-size: 13px;
-  color: #dc3545;
+  margin-top: 5px !important;
+  font-size: 12px !important;
+  color: #dc3545 !important;
+  display: block !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-page-container {
+    padding: 15px;
+  }
+  
+  .auth-form-container {
+    padding: 30px 20px;
+  }
+  
+  .auth-form-container h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-container {
+    padding: 20px 15px;
+  }
 }

@@ -29,7 +29,11 @@ const userSchema = new mongoose.Schema({
     },
     profile:{
         type:mongoose.Schema.Types.ObjectId,
-        refPath:'role'
+        refPath:'profileModel'
+    },
+    profileModel: {
+        type: String,
+        enum: ['Student','Teacher'],
     }
 }, {
     timestamps: true

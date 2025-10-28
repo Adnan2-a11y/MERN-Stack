@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // added
 import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { registerUser } from "../../api/auth";
 import "../../styles/Auth.css";
+import "../../styles/home.css"; // Import home styles for consistency
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +17,7 @@ const Register = () => {
     password: "",
     role: "student",
   });
+  const navigate = useNavigate(); // added
 
   const [errors, setErrors] = useState({});
 
@@ -67,6 +70,8 @@ const Register = () => {
       const res = await registerUser(formData);
       alert(res.message);
       console.log("✅ Registered:", res);
+      // After register, send user to login page (or homepage)
+      navigate("/account/login");
     } catch (err) {
       console.error(err.response?.data || err);
       alert("❌ Registration failed!");
@@ -74,7 +79,9 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
+  
+    <div className="auth-page-container">
+      <div className="auth-form-container">
       <h3 className="text-center mb-3">Register</h3>
       {[
         { label: "Username", name: "username", type: "text" },
@@ -88,12 +95,14 @@ const Register = () => {
       ].map((input) => (
         <div key={input.name}>
           <MDBInput
+            key={input.name}
             wrapperClass="mb-3"
             label={input.label}
             name={input.name}
             type={input.type}
             value={formData[input.name]}
             onChange={handleChange}
+            placeholder=" " // Add empty placeholder
           />
           {errors[input.name] && (
             <p className="text-danger small">{errors[input.name]}</p>
@@ -103,6 +112,10 @@ const Register = () => {
       <MDBBtn className="auth-btn w-100" onClick={handleRegister}>
         Sign Up
       </MDBBtn>
+      <p className="text-center mt-3">
+        Already have an account? <a href="/account/login">Login here</a>
+      </p>
+    </div>
     </div>
   );
 };
