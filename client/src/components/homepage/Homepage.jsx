@@ -12,8 +12,8 @@ const Homepage = () => {
     <div className="home-container">
       <nav className="home-navbar">
         <div className="logo">
-          <img src="/logo.jpeg" alt="Logo" className="logo-img" />
-          <h2>CSE Third Batch</h2>
+          <img src="/logo.png" alt="Logo" className="logo-img" />
+          <h2>LearnFlow</h2>
         </div>
         <ul className="nav-links">
           <li>Home</li>
