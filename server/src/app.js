@@ -29,7 +29,7 @@ console.log("✅ Auth route file loaded successfully!");
 
 //Define routes
 app.use('/api/auth', authRoute);
-app.use('/api/courses', courseRoutes);
+app.use('/api/course', courseRoutes);
 //app.use('/api/dashboard', dashboardRoutes);
 
 app.use((req, res) => {

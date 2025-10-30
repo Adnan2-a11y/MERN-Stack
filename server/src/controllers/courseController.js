@@ -1,11 +1,11 @@
-import Course from '../models/courseModel.js';
+import Course from '../models/Course.js';
 
 
 export const addCourse = async (req, res) => {
     try{
         const { title, description, instructor, category, duration, lessons } = req.body;
         //check require fields
-        if ( !title|| !description || !instructor || !category || !duration || !lessons){
+        if ( !title|| !description || !instructor ){
             return res.status(400).json({
                 sucess : false,
                 message: 'Please provide all required fields: title, description, category, duration, lessons',
